@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JobPortal - Find Your Dream Job</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+        .profile-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+
+        .image-preview img {
+            max-width: 150px;
+            max-height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <i class="fas fa-briefcase"></i>
+                <span>JobPortal</span>
+            </div>
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="#home" class="nav-link">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#jobs" class="nav-link">Jobs</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#colleges" class="nav-link">Colleges</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#companies" class="nav-link">Companies</a>
+                </li>
+                <li class="nav-item">
+                    <button id="membershipBtn" class="btn btn-outline">Membership</button>
+                </li>
+                <li class="nav-item">
+                    <button id="loginBtn" class="btn btn-primary">Login</button>
+                </li>
+                <li class="nav-item">
+                    <button id="registerBtn" class="btn btn-secondary">Register</button>
+                </li>
+            </ul>
+            <div class="hamburger">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-container">
+            <div class="hero-content">
+                <h1>Find Your Dream Job</h1>
+                <p>Connect with top companies and discover amazing opportunities. Whether you're looking for a full-time position or an internship, we've got you covered.</p>
+                <div class="search-box">
+                    <input type="text" id="jobSearch" placeholder="Search for jobs, companies, or keywords...">
+                    <button class="search-btn">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+                <div class="hero-stats">
+                    <div class="stat">
+                        <h3>10,000+</h3>
+                        <p>Active Jobs</p>
+                    </div>
+                    <div class="stat">
+                        <h3>500+</h3>
+                        <p>Companies</p>
+                    </div>
+                    <div class="stat">
+                        <h3>50,000+</h3>
+                        <p>Job Seekers</p>
+                    </div>
+                </div>
+            </div>
+            <div class="hero-image">
+                <img src="https://images.unsplash.com/photo-1521737711867-e3b97375f902?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Job Search">
+            </div>
+        </div>
+    </section>
+
+    <!-- Login Modal -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Login to Your Account</h2>
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="loginEmail">Email</label>
+                    <input type="email" id="loginEmail" required>
+                </div>
+                <div class="form-group">
+                    <label for="loginPassword">Password</label>
+                    <input type="password" id="loginPassword" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Login</button>
+            </form>
+            <p>Don't have an account? <a href="#" id="showRegister">Register here</a></p>
+            <p style="margin-top: 10px;"><a href="#" id="showForgotPassword">Forgot your password?</a></p>
+        </div>
+    </div>
+
+    <!-- Register Modal -->
+    <div id="registerModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Create Your Account</h2>
+            <form id="registerForm">
+                <div class="form-group">
+                    <label for="registerName">Full Name</label>
+                    <input type="text" id="registerName" required>
+                </div>
+                <div class="form-group">
+                    <label for="registerEmail">Email</label>
+                    <input type="email" id="registerEmail" required>
+                </div>
+                <div class="form-group">
+                    <label for="registerPassword">Password</label>
+                    <input type="password" id="registerPassword" required>
+                </div>
+                <div class="form-group">
+                    <label for="userType">I am a:</label>
+                    <select id="userType" required>
+                        <option value="">Select type</option>
+                        <option value="jobseeker">Job Seeker</option>
+                        <option value="company">Company</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary">Register</button>
+            </form>
+            <p>Already have an account? <a href="#" id="showLogin">Login here</a></p>
+        </div>
+    </div>
+
+    <!-- Profile Section -->
+    <section id="profile" class="profile-section">
+        <div class="container">
+            <h2>Your Profile</h2>
+            <div id="profileContent" class="profile-content">
+                <!-- Profile content will be populated by JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Jobs Section -->
+    <section id="jobs" class="jobs-section">
+        <div class="container">
+            <h2>Latest Job Opportunities</h2>
+            <div class="filters">
+                <select id="jobCategory">
+                    <option value="">All Categories</option>
+                    <option value="Technology">Technology</option>
+                    <option value="Marketing">Marketing</option>
+                    <option value="Design">Design</option>
+                    <option value="Sales">Sales</option>
+                    <option value="Finance">Finance</option>
+                </select>
+                <select id="jobType">
+                    <option value="">All Types</option>
+                    <option value="Full Time">Full Time</option>
+                    <option value="Part Time">Part Time</option>
+                    <option value="Internship">Internship</option>
+                    <option value="Contract">Contract</option>
+                </select>
+                <select id="jobLocation">
+                    <option value="">All Locations</option>
+                    <option value="Remote">Remote</option>
+                    <option value="New York">New York</option>
+                    <option value="San Francisco">San Francisco</option>
+                    <option value="London">London</option>
+                </select>
+            </div>
+            <div id="jobsList" class="jobs-grid">
+                <!-- Jobs will be populated by JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <section class="colleges-section" id="colleges">
+   <div class="container">
+    <h2>
+     Colleges &amp; Courses
+    </h2>
+    <p style="text-align: center; margin-bottom: 40px; color: #64748b; font-size: 1.1rem;">
+     Discover top colleges and apply for admission to your dream courses
+    </p>
+    <div class="filters">
+     <select id="collegeLocation">
+      <option value="">
+       All Locations
+      </option>
+      <option value="New Delhi">
+       New Delhi
+      </option>
+      <option value="Ahmedabad">
+       Ahmedabad
+      </option>
+      <option value="Pune">
+       Pune
+      </option>
+      <option value="Manipal">
+       Manipal
+      </option>
+      <option value="Noida">
+       Noida
+      </option>
+     </select>
+     <select id="courseType">
+      <option value="">
+       All Course Types
+      </option>
+      <option value="Computer Science">
+       Computer Science
+      </option>
+      <option value="Engineering">
+       Engineering
+      </option>
+      <option value="BBA">
+       BBA
+      </option>
+      <option value="Law">
+       Law
+      </option>
+      <option value="MBA">
+       MBA
+      </option>
+     </select>
+     <select id="degreeLevel">
+      <option value="">
+       All Levels
+      </option>
+      <option value="4.5">
+       4.5+
+      </option>
+      <option value="4.3">
+       4.3+
+      </option>
+      <option value="4.0">
+       4.0+
+      </option>
+     </select>
+    </div>
+    <div class="colleges-grid" id="collegesList">
+     <!-- Populated by JavaScript -->
+    </div>
+   </div>
+  </section>
+  <!-- Admission Application Modal -->
+  <div id="admissionModal" class="modal">
+    <div class="modal-content" style="max-width: 600px;">
+        <span class="close">&times;</span>
+        <h2>Apply for Admission</h2>
+        <div style="background: #f0f9ff; border: 1px solid #0ea5e9; border-radius: 8px; padding: 15px; margin-bottom: 20px;">
+            <p style="margin: 0; color: #0369a1;">
+                <strong>College:</strong> <span id="admissionCollegeName"></span><br>
+                <strong>Location:</strong> <span id="admissionCollegeLocation"></span>
+            </p>
+        </div>
+        <form id="admissionForm">
+            <div class="form-group">
+                <label for="admissionCourse">Select Course</label>
+                <select id="admissionCourse" required>
+                    <option value="">Select a course</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="admissionName">Full Name</label>
+                <input type="text" id="admissionName" required>
+            </div>
+            <div class="form-group">
+                <label for="admissionEmail">Email Address</label>
+                <input type="email" id="admissionEmail" required>
+            </div>
+            <div class="form-group">
+                <label for="admissionPhone">Phone Number</label>
+                <input type="tel" id="admissionPhone" required>
+            </div>
+            <div class="form-group">
+                <label for="admissionEducation">Highest Education Completed</label>
+                <select id="admissionEducation" required>
+                    <option value="">Select Education Level</option>
+                    <option value="High School">High School</option>
+                    <option value="Associate Degree">Associate Degree</option>
+                    <option value="Bachelor's Degree">Bachelor's Degree</option>
+                    <option value="Master's Degree">Master's Degree</option>
+                    <option value="PhD">PhD</option>
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit Application</button>
+        </form>
+    </div>
+  </div>
+
+    <!-- Profile Modal -->
+    <div id="profileModal" class="modal">
+        <div class="modal-content" style="max-width: 800px; max-height: 90vh; overflow-y: auto;">
+            <span class="close">&times;</span>
+            <div id="profileContent">
+                <!-- Profile content will be populated by JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Profile Modal -->
+    <div id="editProfileModal" class="modal">
+        <div class="modal-content" style="max-width: 500px;">
+            <span class="close">&times;</span>
+            <h2>Edit Profile</h2>
+            <form id="editProfileForm">
+                <div class="form-group">
+                    <label for="editName">Name</label>
+                    <input type="text" id="editName" required>
+                </div>
+                <div class="form-group">
+                    <label for="editProfileImage">Profile Picture</label>
+                    <input type="file" id="editProfileImage" accept="image/*" onchange="previewProfileImage(event)">
+                    <small>Upload a profile picture (JPG, PNG, GIF - Max 2MB)</small>
+                    <div id="imagePreview" class="image-preview">
+                        <img id="previewImg" src="" alt="Profile Preview">
+                        <button type="button" onclick="removeProfileImage()">Remove Image</button>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="editPhone">Phone</label>
+                    <input type="tel" id="editPhone">
+                </div>
+                <div class="form-group">
+                    <label for="editLocation">Location</label>
+                    <input type="text" id="editLocation">
+                </div>
+                <div class="form-group">
+                    <label for="editExperience">Experience</label>
+                    <input type="text" id="editExperience">
+                </div>
+                <div class="form-group">
+                    <label for="editSkills">Skills</label>
+                    <input type="text" id="editSkills" placeholder="e.g., JavaScript, React, Node.js">
+                </div>
+                <div class="form-group">
+                    <label for="editBio">Bio</label>
+                    <textarea id="editBio" rows="4" placeholder="Tell us about yourself..."></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Save Changes</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Membership Modal -->
+    <div id="membershipModal" class="modal">
+        <div class="modal-content" style="max-width: 900px;">
+            <span class="close">&times;</span>
+            <h2 style="text-align: center;">Choose Your Membership Plan</h2>
+            <p style="text-align: center; color: #64748b; margin-bottom: 30px;">
+                Unlock premium features and get unlimited access to job opportunities
+            </p>
+
+            <!-- Current Plan Status Section -->
+            <div id="currentPlanStatus" class="current-plan-status" style="display: none;">
+                <div class="current-plan-header">
+                    <i class="fas fa-crown" style="color: #f59e0b; margin-right: 10px;"></i>
+                    <h3>Your Current Plan</h3>
+                </div>
+                <div class="current-plan-details">
+                    <div class="current-plan-info">
+                        <h4 id="currentPlanName">Bronze Plan</h4>
+                        <p id="currentPlanPrice">Free</p>
+                        <p id="currentPlanDuration">Forever</p>
+                    </div>
+                    <div class="current-plan-stats">
+                        <div class="stat-item">
+                            <span class="stat-label">Applications Used:</span>
+                            <span id="currentPlanApplicationsUsed">0/3</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">Expires:</span>
+                            <span id="currentPlanExpires">Never</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="membership-plans">
+                <!-- Bronze Plan -->
+                <div class="plan-card bronze">
+                    <div class="plan-header">
+                        <div class="plan-icon">🥉</div>
+                        <h3>Bronze</h3>
+                        <p class="plan-subtitle">Free Plan</p>
+                    </div>
+                    <div class="plan-features">
+                        <ul>
+                            <li>✓ Basic job search</li>
+                            <li>✓ Limited job applications (3/month)</li>
+                            <li>✓ Basic profile</li>
+                            <li>✗ Premium job alerts</li>
+                            <li>✗ Priority support</li>
+                            <li>✗ Advanced filters</li>
+                        </ul>
+                    </div>
+                    <div class="plan-footer">
+                        <p class="plan-price">Free</p>
+                        <p class="plan-duration">Forever</p>
+                        <button class="btn btn-secondary" disabled>Current Plan</button>
+                    </div>
+                </div>
+
+                <!-- Silver Plan -->
+                <div class="plan-card silver">
+                    <div class="plan-header">
+                        <div class="plan-icon">🥈</div>
+                        <h3>Silver</h3>
+                        <p class="plan-subtitle">Most Popular</p>
+                    </div>
+                    <div class="plan-features">
+                        <ul>
+                            <li>✓ Unlimited job applications</li>
+                            <li>✓ Advanced job search</li>
+                            <li>✓ Premium job alerts</li>
+                            <li>✓ Enhanced profile</li>
+                            <li>✓ Email support</li>
+                            <li>✓ Basic analytics</li>
+                        </ul>
+                    </div>
+                    <div class="plan-footer">
+                        <p class="plan-price">₹49</p>
+                        <p class="plan-duration">1 Month</p>
+                        <button class="btn btn-primary" onclick="openPaymentModal('silver', 49)">Subscribe Now</button>
+                    </div>
+                </div>
+
+                <!-- Gold Plan -->
+                <div class="plan-card gold">
+                    <div class="plan-header">
+                        <div class="plan-icon">🥇</div>
+                        <h3>Gold</h3>
+                        <p class="plan-subtitle">Best Value</p>
+                    </div>
+                    <div class="plan-features">
+                        <ul>
+                            <li>✓ All Silver features</li>
+                            <li>✓ Priority job applications</li>
+                            <li>✓ Direct company contact</li>
+                            <li>✓ Resume builder</li>
+                            <li>✓ Phone support</li>
+                            <li>✓ Advanced analytics</li>
+                        </ul>
+                    </div>
+                    <div class="plan-footer">
+                        <p class="plan-price">₹99</p>
+                        <p class="plan-duration">2 Months</p>
+                        <button class="btn btn-primary" onclick="openPaymentModal('gold', 99)">Subscribe Now</button>
+                    </div>
+                </div>
+
+                <!-- Diamond Plan -->
+                <div class="plan-card diamond">
+                    <div class="plan-header">
+                        <div class="plan-icon">💎</div>
+                        <h3>Diamond</h3>
+                        <p class="plan-subtitle">Premium</p>
+                    </div>
+                    <div class="plan-features">
+                        <ul>
+                            <li>✓ All Gold features</li>
+                            <li>✓ VIP job access</li>
+                            <li>✓ Personal career coach</li>
+                            <li>✓ Interview preparation</li>
+                            <li>✓ 24/7 support</li>
+                            <li>✓ Custom reports available</li>
+                        </ul>
+                    </div>
+                    <div class="plan-footer">
+                        <p class="plan-price">₹149</p>
+                        <p class="plan-duration">3 Months</p>
+                        <button class="btn btn-primary" onclick="openPaymentModal('diamond', 149)">Subscribe Now</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Payment Modal -->
+    <div id="paymentModal" class="modal">
+        <div class="modal-content" style="max-width: 500px;">
+            <span class="close">&times;</span>
+            <h2 style="text-align: center;">Complete Payment</h2>
+            <div id="paymentDetails" style="background: #f8fafc; border-radius: 8px; padding: 20px; margin-bottom: 20px; text-align: center;">
+                <h3 id="selectedPlanName">Silver Plan</h3>
+                <p id="selectedPlanPrice" style="font-size: 1.5rem; font-weight: bold; color: #2563eb;">₹49</p>
+                <p id="selectedPlanDuration" style="color: #64748b;">1 Month</p>
+            </div>
+            
+            <form id="paymentForm">
+                <div class="form-group">
+                    <label for="cardName">Cardholder Name</label>
+                    <input type="text" id="cardName" placeholder="Enter cardholder name" required>
+                </div>
+                <div class="form-group">
+                    <label for="cardNumber">Card Number</label>
+                    <input type="text" id="cardNumber" placeholder="1234 5678 9012 3456" maxlength="19" required>
+                </div>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                    <div class="form-group">
+                        <label for="cardExpiry">Expiry Date</label>
+                        <input type="text" id="cardExpiry" placeholder="MM/YY" maxlength="5" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="cardCvv">CVV</label>
+                        <input type="text" id="cardCvv" placeholder="123" maxlength="4" required>
+                    </div>
+                </div>
+                <div style="display: flex; gap: 10px; margin-top: 20px;">
+                    <button type="button" class="btn btn-secondary" onclick="closePaymentModal()" style="flex: 1;">Cancel</button>
+                    <button type="submit" class="btn btn-primary" style="flex: 1;">
+                        <i class="fas fa-lock"></i> Pay Now
+                    </button>
+                </div>
+            </form>
+            
+            <div style="margin-top: 20px; text-align: center; color: #64748b; font-size: 0.9rem;">
+                <i class="fas fa-shield-alt"></i> Your payment information is secure and encrypted
+            </div>
+        </div>
+    </div>
+
+    <!-- Payment Success Modal -->
+    <div id="paymentSuccessModal" class="modal">
+        <div class="modal-content" style="max-width: 500px; text-align: center;">
+            <div style="padding: 40px 20px;">
+                <!-- Success Icon -->
+                <div style="width: 80px; height: 80px; background: linear-gradient(135deg, #10b981 0%, #059669 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 30px; box-shadow: 0 10px 30px rgba(16, 185, 129, 0.3);">
+                    <i class="fas fa-check" style="font-size: 2rem; color: white;"></i>
+                </div>
+                
+                <!-- Success Message -->
+                <h2 style="color: #059669; margin-bottom: 15px; font-size: 1.8rem;">Payment Successful!</h2>
+                <p style="color: #64748b; margin-bottom: 30px; font-size: 1.1rem; line-height: 1.6;">
+                    Your payment has been processed successfully. Welcome to your new membership plan!
+                </p>
+                
+                <!-- Plan Details -->
+                <div id="successPlanDetails" style="background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%); border-radius: 12px; padding: 25px; margin-bottom: 30px; border: 1px solid #0ea5e9;">
+                    <h3 id="successPlanName" style="color: #0369a1; margin-bottom: 10px; font-size: 1.3rem;">Silver Plan</h3>
+                    <p id="successPlanPrice" style="font-size: 1.5rem; font-weight: bold; color: #0ea5e9; margin-bottom: 5px;">₹49</p>
+                    <p id="successPlanDuration" style="color: #0369a1;">1 Month</p>
+                </div>
+                
+                <!-- Transaction Details -->
+                <div style="background: #f8fafc; border-radius: 8px; padding: 20px; margin-bottom: 30px; text-align: left;">
+                    <h4 style="color: #1e293b; margin-bottom: 15px; font-size: 1.1rem;">Transaction Details</h4>
+                    <div style="display: grid; gap: 8px; font-size: 0.9rem;">
+                        <div style="display: flex; justify-content: space-between;">
+                            <span style="color: #64748b;">Transaction ID:</span>
+                            <span style="color: #1e293b; font-weight: 600;" id="transactionId">TXN123456789</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between;">
+                            <span style="color: #64748b;">Date:</span>
+                            <span style="color: #1e293b; font-weight: 600;" id="transactionDate"></span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between;">
+                            <span style="color: #64748b;">Status:</span>
+                            <span style="color: #059669; font-weight: 600;">✓ Completed</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Action Buttons -->
+                <div style="display: flex; gap: 15px;">
+                    <button class="btn btn-primary" onclick="closePaymentSuccessModal()" style="flex: 1; padding: 12px 20px;">
+                        <i class="fas fa-home"></i> Go to Dashboard
+                    </button>
+                    <button class="btn btn-secondary" onclick="viewMembershipDetails()" style="flex: 1; padding: 12px 20px;">
+                        <i class="fas fa-crown"></i> View Plan
+                    </button>
+                </div>
+                
+                <!-- Additional Info -->
+                <div style="margin-top: 25px; padding-top: 20px; border-top: 1px solid #e2e8f0;">
+                    <p style="color: #64748b; font-size: 0.9rem; margin-bottom: 10px;">
+                        <i class="fas fa-envelope"></i> A confirmation email has been sent to your registered email address.
+                    </p>
+                    <p style="color: #64748b; font-size: 0.9rem;">
+                        <i class="fas fa-clock"></i> Your new features are now active and ready to use!
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Forgot Password Modal -->
+    <div id="forgotPasswordModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Reset Your Password</h2>
+            <form id="forgotPasswordForm">
+                <div class="form-group">
+                    <label for="forgotEmail">Email Address</label>
+                    <input type="email" id="forgotEmail" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Send Reset Link</button>
+            </form>
+            <p>Remember your password? <a href="#" id="showLoginFromForgot">Login here</a></p>
+        </div>
+    </div>
+
+    <!-- Reset Password Modal -->
+    <div id="resetPasswordModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Set New Password</h2>
+            <div style="background: #f0f9ff; border: 1px solid #0ea5e9; border-radius: 8px; padding: 15px; margin-bottom: 20px;">
+                <p style="margin: 0; color: #0369a1; font-size: 0.9rem;">
+                    <strong>Demo Mode:</strong> Use reset code: <code style="background: #e0f2fe; padding: 2px 6px; border-radius: 4px;">123456</code>
+                </p>
+            </div>
+            <form id="resetPasswordForm">
+                <div class="form-group">
+                    <label for="resetCode">Reset Code</label>
+                    <input type="text" id="resetCode" placeholder="Enter the 6-digit code from your email" required>
+                </div>
+                <div class="form-group">
+                    <label for="newPassword">New Password</label>
+                    <input type="password" id="newPassword" required>
+                </div>
+                <div class="form-group">
+                    <label for="confirmPassword">Confirm New Password</label>
+                    <input type="password" id="confirmPassword" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Reset Password</button>
+            </form>
+            <p>Didn't receive the code? <a href="#" id="resendCode">Resend</a></p>
+        </div>
+    </div>
+
+    <!-- Companies Section -->
+    <section id="companies" class="companies-section">
+        <div class="container">
+            <h2>Featured Companies</h2>
+            <div id="companiesList" class="companies-grid">
+                <!-- Companies will be populated by JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>JobPortal</h3>
+                    <p>Connecting talented professionals with amazing opportunities.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>For Job Seekers</h4>
+                    <ul>
+                        <li><a href="#jobs">Browse Jobs</a></li>
+                        <li><a href="#profile">Create Profile</a></li>
+                        <li><a href="#companies">Find Companies</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>For Companies</h4>
+                    <ul>
+                        <li><a href="#">Post Jobs</a></li>
+                        <li><a href="#">Find Talent</a></li>
+                        <li><a href="#">Company Profile</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Contact</h4>
+                    <ul>
+                        <li><a href="mailto:contact@jobportal.com">contact@jobportal.com</a></li>
+                        <li><a href="tel:+1234567890">+1 (234) 567-890</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 JobPortal. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Firebase SDK -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-app.js";
+        import {
+            getAuth,
+            createUserWithEmailAndPassword,
+            signInWithEmailAndPassword,
+            signOut,
+            onAuthStateChanged
+        } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-auth.js";
+
+        // Firebase config
+        const firebaseConfig = {
+            apiKey: "AIzaSyBEfXoKuYAHqk_9JTY819FDI-vs38xgh_c",
+            authDomain: "userlogin-e1c05.firebaseapp.com",
+            projectId: "userlogin-e1c05",
+            storageBucket: "userlogin-e1c05.firebasestorage.app",
+            messagingSenderId: "1009699144108",
+            appId: "1:1009699144108:web:a91fb812d7776f7a477a09"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+
+        // Make Firebase available globally
+        window.firebaseAuth = auth;
+        window.firebaseAuthFunctions = {
+            createUserWithEmailAndPassword,
+            signInWithEmailAndPassword,
+            signOut,
+            onAuthStateChanged
+        };
+    </script>
+
+    <!-- JavaScript Files -->
+    <script src="utils.js"></script>
+    <script src="login.js"></script>
+    <script src="membership.js"></script>
+    <script src="profile.js"></script>
+    <script src="jobs.js"></script>
+    <script src="colleges.js"></script>
+    <script src="companies.js"></script>
+    
+</body>
+</html> 
